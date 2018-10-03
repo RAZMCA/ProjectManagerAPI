@@ -9,18 +9,18 @@ namespace ProjectManager.Tests
     [TestClass]
     public class TestProject
     {
-        ProjectController controller = new ProjectController();
+        TaskController taskController = new TaskController();
 
         [TestMethod]
         public void GetAllTask()
         {
-            var result = controller.GetAllTask();
+            var result = taskController.GetAllTask();
             Assert.IsTrue(result.Count > 0);
         }
         [TestMethod]
         public void GetParentTask()
         {
-            var result = controller.GetParentTask();
+            var result = taskController.GetParentTask();
             Assert.IsTrue(result != null);
         }
 
@@ -35,7 +35,7 @@ namespace ProjectManager.Tests
             addTask.ParentId = 3;
             JavaScriptSerializer objJavascript = new JavaScriptSerializer();
             var testModels = objJavascript.Serialize(addTask);
-            var isAdded = controller.InsertTaskDetails(testModels);
+            var isAdded = taskController.AddorUpdateTask(testModels);
             Assert.AreEqual("ADD", isAdded);
         }
 
@@ -51,7 +51,7 @@ namespace ProjectManager.Tests
             updateTask.ParentId = 2;
             JavaScriptSerializer objJavascript = new JavaScriptSerializer();
             var testModels = objJavascript.Serialize(updateTask);
-            var isUpdated = controller.InsertTaskDetails(testModels);
+            var isUpdated = taskController.AddorUpdateTask(testModels);
             Assert.AreEqual("UPDATE", isUpdated);
         }
 
@@ -67,7 +67,7 @@ namespace ProjectManager.Tests
             endTask.ParentId = 2;
             JavaScriptSerializer objJavascript = new JavaScriptSerializer();
             var testModels = objJavascript.Serialize(endTask);
-            var isSuccess = controller.UpdateEndTask(testModels);
+            var isSuccess = taskController.EndTask(testModels);
             Assert.AreEqual(true, isSuccess);
         }
     }

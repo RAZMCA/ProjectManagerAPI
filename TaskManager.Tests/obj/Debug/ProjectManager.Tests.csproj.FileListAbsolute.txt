@@ -50,9 +50,9 @@ C:\Users\SBA\ProjectManagerAPI\TaskManager.Tests\bin\Debug\ProjectManager.pdb
 C:\Users\SBA\ProjectManagerAPI\TaskManager.Tests\bin\Debug\ProjectManager.dll.config
 C:\Users\SBA\ProjectManagerAPI\TaskManager.Tests\bin\Debug\EntityFramework.xml
 C:\Users\SBA\ProjectManagerAPI\TaskManager.Tests\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\SBA\ProjectManagerAPI\TaskManager.Tests\bin\Debug\System.Net.Http.Formatting.xml
 C:\Users\SBA\ProjectManagerAPI\TaskManager.Tests\bin\Debug\System.Web.Http.xml
 C:\Users\SBA\ProjectManagerAPI\TaskManager.Tests\bin\Debug\Newtonsoft.Json.xml
-C:\Users\SBA\ProjectManagerAPI\TaskManager.Tests\bin\Debug\System.Net.Http.Formatting.xml
 C:\Users\SBA\ProjectManagerAPI\TaskManager.Tests\bin\Debug\System.Web.Helpers.xml
 C:\Users\SBA\ProjectManagerAPI\TaskManager.Tests\bin\Debug\System.Web.Http.WebHost.xml
 C:\Users\SBA\ProjectManagerAPI\TaskManager.Tests\bin\Debug\System.Web.Mvc.xml

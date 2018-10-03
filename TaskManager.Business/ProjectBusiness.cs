@@ -10,70 +10,57 @@ namespace ProjectManager.Business
     {
         ProjectRepository projectRepository;
 
-        #region GetParentTask
+        #region GetAllProject
         /// <summary>
-        /// Method to fetch the parent task details to load the parent task dropdown
+        /// Method to fetch the all the project details
         /// </summary>
         /// <returns></returns>
-        public List<TaskModel> GetParentTask()
+        public List<ProjectModel> GetAllProject()
         {
             projectRepository = new ProjectRepository();
-            var result = projectRepository.GetParentTask();
+            var result = projectRepository.GetAllProject();
             return result;
         }
         #endregion
 
-        #region GetAllTask
+        #region AddOrUpdateProject
         /// <summary>
-        /// Method to fetch all the task details
+        /// Method to add or update a project
         /// </summary>
+        /// <param name="projectModel"></param>
         /// <returns></returns>
-        public List<TaskModel> GetAllTask()
-        {
-            projectRepository = new ProjectRepository();
-            var result = projectRepository.GetAllTask();
-            return result;
-        }
-        #endregion
-
-        #region InsertTask
-        /// <summary>
-        /// Method to insert the task details
-        /// </summary>
-        /// <param name="taskModel"></param>
-        /// <returns></returns>
-        public string InsertTask(object taskModel)
+        public string AddOrUpdateProject(object projectModel)
         {
             string result = string.Empty;
             projectRepository = new ProjectRepository();
-            result = projectRepository.InsertTask(Converter(taskModel));
+            result = projectRepository.AddOrUpdateProject(ProjectConverter(projectModel));
             return result;
         }
         #endregion
 
-        #region UpdateTask
+        #region SuspendProject
         /// <summary>
         /// Method to end Task 
         /// </summary>
         /// <param name="taskModel"></param>
         /// <returns></returns>
-        public bool UpdateTask(object taskModel)
+        public bool SuspendProject(object projectModel)
         {
             projectRepository = new ProjectRepository();
-            return projectRepository.UpdateTask(Converter(taskModel));
+            return projectRepository.SuspendProject(ProjectConverter(projectModel));
         }
         #endregion
 
-        #region Converter
+        #region ProjectConverter
         /// <summary>
         /// Method to convert the incoming objects to models
         /// </summary>
         /// <param name="task"></param>
         /// <returns></returns>
-        private TaskModel Converter(object task)
+        public ProjectModel ProjectConverter(object project)
         {
-            TaskModel taskModel = new TaskModel();
-            string details = task.ToString();
+            ProjectModel projectModel = new ProjectModel();
+            string details = project.ToString();
             JavaScriptSerializer objJavascript = new JavaScriptSerializer();
             var testModels = objJavascript.DeserializeObject(details);
 
@@ -82,23 +69,22 @@ namespace ProjectManager.Business
                 Dictionary<string, object> dic1 = (Dictionary<string, object>)testModels;
                 object value;
 
-                if (dic1.TryGetValue("Task", out value))
-                    taskModel.Task = value.ToString();
-                if (dic1.TryGetValue("ParentId", out value))
-                    taskModel.ParentId = string.IsNullOrWhiteSpace(value.ToString()) ? 0 : Convert.ToInt16(value);
+                if (dic1.TryGetValue("Project", out value))
+                    projectModel.Project = value.ToString();
                 if (dic1.TryGetValue("Priority", out value))
-                    taskModel.Priority = string.IsNullOrWhiteSpace(value.ToString()) ? 0 : Convert.ToInt16(value);
+                    projectModel.Priority = string.IsNullOrWhiteSpace(value.ToString()) ? 0 : Convert.ToInt16(value);
                 if (dic1.TryGetValue("StartDate", out value))
-                    taskModel.StartDateString = value.ToString();
+                    projectModel.StartDate = string.IsNullOrWhiteSpace(value.ToString()) ? DateTime.Now : Convert.ToDateTime(value);
                 if (dic1.TryGetValue("EndDate", out value))
-                    taskModel.EndDateString = value.ToString();
-                if (dic1.TryGetValue("TaskId", out value))
-                    taskModel.TaskId = string.IsNullOrWhiteSpace(value.ToString()) ? 0 : Convert.ToInt16(value);
-                return taskModel;
+                    projectModel.EndDate = string.IsNullOrWhiteSpace(value.ToString()) ? DateTime.Now : Convert.ToDateTime(value);
+                if (dic1.TryGetValue("Manager", out value))
+                    projectModel.ManagerId = string.IsNullOrWhiteSpace(value.ToString()) ? 0 : Convert.ToInt16(value);
+                return projectModel;
             }
 
-            return taskModel;
+            return projectModel;
         }
         #endregion
     }
 }
+

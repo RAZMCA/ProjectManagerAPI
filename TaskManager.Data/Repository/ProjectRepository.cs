@@ -8,89 +8,54 @@ namespace ProjectManager.Data.Repository
 {
     public class ProjectRepository
     {
-        #region GetParentTask
+        #region GetAllProject
         /// <summary>
-        /// Method to get parent tasks
+        /// Method to get all project list
         /// </summary>
         /// <returns></returns>
-        public List<TaskModel> GetParentTask()
+        public List<ProjectModel> GetAllProject()
         {
-            using (TaskManagerEntities entity = new TaskManagerEntities())
+            using (ProjectManagerEntities entity = new ProjectManagerEntities())
             {
-                var parentTasks = (from task in entity.ParentTasks
-                                   select new TaskModel()
+                var projectList = (from project in entity.Projects
+                                   join task in entity.Tasks on project.Project_ID equals task.Project_ID
+                                   select new ProjectModel()
                                    {
-                                       ParentId = task.Parent_Id,
-                                       ParentTask = task.Parent_Task
+                                       Project = project.Project1,
+                                       Priority = project.Priority,
+                                       StartDate = project.Start_Date,
+                                       EndDate = project.End_Date,
+                                       IsActive = project.Status,
+                                       NoOfTasks = project.Tasks.Count(),
+                                       CompletedTasks = project.Tasks.Where(x => x.Status == true).Count()
                                    }).ToList();
 
-                return parentTasks;
+                return projectList;
             }
         }
         #endregion 
 
-        #region GetAllTask
+        #region AddOrUpdateProject
         /// <summary>
-        /// Method to get all task
+        /// Method to create new project or update an existing project
         /// </summary>
+        /// <param name="projectModel"></param>
         /// <returns></returns>
-        public List<TaskModel> GetAllTask()
+        public string AddOrUpdateProject(ProjectModel projectModel)
         {
-            using (TaskManagerEntities entity = new TaskManagerEntities())
+            string result = string.Empty;
+            using (ProjectManagerEntities entity = new ProjectManagerEntities())
             {
-                var taskList = (from task in entity.Tasks.Include("ParentTask") orderby task.Task_Id descending
-                                select new TaskModel()
-                                {
-                                    TaskId = task.Task_Id,
-                                    Task = task.Task1,
-                                    ParentTask = task.ParentTask.Parent_Task,
-                                    Priority = task.Priority,
-                                    StartDate = task.Start_Date,
-                                    EndDate = task.End_Date,
-                                    ParentId = task.ParentTask.Parent_Id,
-                                    IsActive = task.IsActive
-                                }).ToList();
-
-                if (taskList != null)
+                if (projectModel != null)
                 {
-                    foreach (var item in taskList)
-                    {
-                        if (item.StartDate != null)
-                            item.StartDateString = item.StartDate.ToString();
-                        if (item.EndDate != null)
-                            item.EndDateString = item.EndDate.ToString();
-                    }
-                }
-                return taskList;
-            }
-        }
-        #endregion
-
-        #region InsertTask
-        /// <summary>
-        /// Method to create new task or update an existing task
-        /// </summary>
-        /// <param name="taskModel"></param>
-        /// <returns></returns>
-        public string InsertTask(TaskModel taskModel)
-        {
-            string result =string.Empty;
-            using (TaskManagerEntities entity = new TaskManagerEntities())
-            {
-                if (taskModel != null)
-                {
-                    Task addTask = new Task();
-                    addTask.Task1 = taskModel.Task;
-                    if (taskModel.StartDateString != null)
-                        addTask.Start_Date = Convert.ToDateTime(taskModel.StartDateString);
-                    if (taskModel.EndDateString != null)
-                        addTask.End_Date = Convert.ToDateTime(taskModel.EndDateString);
-                    addTask.Priority = taskModel.Priority;
-                    addTask.Parent_Id = taskModel.ParentId;
-                    addTask.Task_Id = taskModel.TaskId;
-                    addTask.IsActive = true;
-                    result = addTask.Task_Id == 0 ? "ADD" : "UPDATE";
-                    entity.Entry(addTask).State = addTask.Task_Id == 0 ? System.Data.Entity.EntityState.Added : System.Data.Entity.EntityState.Modified;
+                    Project addProject = new Project();
+                    addProject.Project1 = projectModel.Project;
+                    addProject.Start_Date = projectModel.StartDate;
+                    addProject.End_Date = projectModel.EndDate;
+                    addProject.Priority = projectModel.Priority;
+                    addProject.Status = true;
+                    result = addProject.Project_ID == 0 ? "ADD" : "UPDATE";
+                    entity.Entry(addProject).State = addProject.Project_ID == 0 ? System.Data.Entity.EntityState.Added : System.Data.Entity.EntityState.Modified;
                     entity.SaveChanges();
                 }
             }
@@ -98,34 +63,31 @@ namespace ProjectManager.Data.Repository
         }
         #endregion
 
-        #region UpdateTask
+        #region SuspendProject
         /// <summary>
-        /// Method to end task
+        /// Method to suspend project
         /// </summary>
-        /// <param name="taskModel"></param>
+        /// <param name="projectModel"></param>
         /// <returns></returns>
-        public bool UpdateTask(TaskModel taskModel)
+        public bool SuspendProject(ProjectModel projectModel)
         {
-            using (TaskManagerEntities entity = new TaskManagerEntities())
+            using (ProjectManagerEntities entity = new ProjectManagerEntities())
             {
-                if (taskModel != null && taskModel.TaskId != 0)
+                if (projectModel != null && projectModel.ProjectId != 0)
                 {
-                    Task endTask = new Task();
-                    endTask.Task_Id = taskModel.TaskId;
-                    endTask.Task1 = taskModel.Task;
-                    if (taskModel.StartDateString != null)
-                        endTask.Start_Date = Convert.ToDateTime(taskModel.StartDateString);
-                    if (taskModel.EndDateString != null)
-                        endTask.End_Date = Convert.ToDateTime(taskModel.EndDateString);
-                    endTask.Priority = taskModel.Priority;
-                    endTask.Parent_Id = taskModel.ParentId;
-                    endTask.IsActive = false;
-                    entity.Entry(endTask).State = System.Data.Entity.EntityState.Modified;
+                    Project suspendProject = new Project();
+                    suspendProject.Project1 = projectModel.Project;
+                    suspendProject.Project_ID = projectModel.ProjectId;
+                    suspendProject.Start_Date = projectModel.StartDate;
+                    suspendProject.End_Date = projectModel.EndDate;
+                    suspendProject.Priority = projectModel.Priority;
+                    suspendProject.Status = false;
+                    entity.Entry(suspendProject).State = System.Data.Entity.EntityState.Modified;
                     entity.SaveChanges();
                 }
                 return true;
             }
-            
+
         }
         #endregion
     }

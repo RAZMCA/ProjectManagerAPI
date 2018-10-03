@@ -9,36 +9,40 @@ namespace ProjectManager.Controllers
     {
         ProjectBusiness projectBusiness;
 
+        [Route("All")]
         [HttpGet]
-        public List<TaskModel> GetParentTask()
+        public List<ProjectModel> GetAllProject()
         {
             projectBusiness = new ProjectBusiness();
-            var result = projectBusiness.GetParentTask();
+            var result = projectBusiness.GetAllProject();
             return result;
         }
 
-        [HttpGet]
-        public List<TaskModel> GetAllTask()
-        {
-            projectBusiness = new ProjectBusiness();
-            var result = projectBusiness.GetAllTask();
-            return result;
-        }
-
+        [Route("AddUpdate")]
         [HttpPost]
-        public string InsertTaskDetails(object task)
+        public string AddOrUpdateProject(object project)
         {
             string result = string.Empty;
             projectBusiness = new ProjectBusiness();
-            result = projectBusiness.InsertTask(task);
+            result = projectBusiness.AddOrUpdateProject(project);
             return result;
         }
 
+        //[Route("Update")]
+        //[HttpPost]
+        //public bool UpdateProject(object task)
+        //{
+        //    projectBusiness = new ProjectBusiness();
+        //    return projectBusiness.UpdateProject(task);
+        //}
+
+        [Route("Suspend")]
         [HttpPost]
-        public bool UpdateEndTask(object task)
+        public bool SuspendProject(object task)
         {
             projectBusiness = new ProjectBusiness();
-            return projectBusiness.UpdateTask(task);
+            return projectBusiness.SuspendProject(task);
         }
-     }
+
+    }
 }

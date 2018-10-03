@@ -12,7 +12,7 @@ namespace ProjectManager.Data.Models.Custom
         public string EndDateString { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public Nullable<int> Priority { get; set; }
+        public int Priority { get; set; }
         public Nullable<bool> IsActive { get; set; }
     }
 }

@@ -39,6 +39,7 @@
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,39 +48,49 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Custom\ProjectModel.cs" />
     <Compile Include="Models\Custom\TaskModel.cs" />
+    <Compile Include="Models\Custom\UserModel.cs" />
     <Compile Include="Models\ParentTask.cs">
-      <DependentUpon>TaskManager.tt</DependentUpon>
+      <DependentUpon>ProjectManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Project.cs">
+      <DependentUpon>ProjectManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProjectManager.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProjectManager.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProjectManager.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProjectManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProjectManager.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProjectManager.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Task.cs">
-      <DependentUpon>TaskManager.tt</DependentUpon>
+      <DependentUpon>ProjectManager.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TaskManager.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TaskManager.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TaskManager.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TaskManager.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TaskManager.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TaskManager.edmx</DependentUpon>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>ProjectManager.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\ProjectRepository.cs" />
+    <Compile Include="Repository\TaskRepository.cs" />
+    <Compile Include="Repository\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <EntityDeploy Include="Models\TaskManager.edmx">
+    <EntityDeploy Include="Models\ProjectManager.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>TaskManager.Designer.cs</LastGenOutput>
+      <LastGenOutput>ProjectManager.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Models\TaskManager.edmx.diagram">
-      <DependentUpon>TaskManager.edmx</DependentUpon>
+    <None Include="Models\ProjectManager.edmx.diagram">
+      <DependentUpon>ProjectManager.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -88,15 +99,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="DBScripts\DBScript_Task.sql" />
-    <Content Include="Models\TaskManager.Context.tt">
+    <Content Include="Models\ProjectManager.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TaskManager.edmx</DependentUpon>
-      <LastGenOutput>TaskManager.Context.cs</LastGenOutput>
+      <DependentUpon>ProjectManager.edmx</DependentUpon>
+      <LastGenOutput>ProjectManager.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\TaskManager.tt">
+    <Content Include="Models\ProjectManager.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TaskManager.edmx</DependentUpon>
-      <LastGenOutput>TaskManager.cs</LastGenOutput>
+      <DependentUpon>ProjectManager.edmx</DependentUpon>
+      <LastGenOutput>ProjectManager.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

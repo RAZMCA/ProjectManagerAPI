@@ -8,7 +8,7 @@ namespace ProjectManager.NBench
 {
     public class NBenchTest
     {
-        ProjectController controller = new ProjectController();
+        TaskController taskController = new TaskController();
         private Counter _objCounter;
 
         [PerfSetup]
@@ -17,25 +17,25 @@ namespace ProjectManager.NBench
             _objCounter = context.GetCounter("ProjectCounter");
         }
 
-        [PerfBenchmark(Description = "Counter iteration performance test GETPARENTTASK()", NumberOfIterations = 15, RunMode = RunMode.Throughput, TestMode = TestMode.Measurement, RunTimeMilliseconds = 1000)]
-        [CounterMeasurement("ProjectCounter")]
-        [MemoryMeasurement(MemoryMetric.TotalBytesAllocated)]
-        public void NBench_GetParentTask()
-        {
-            var bytes = new byte[1024];
-            var result = controller.GetParentTask();
-            _objCounter.Increment();
-        }
+        //[PerfBenchmark(Description = "Counter iteration performance test GETPARENTTASK()", NumberOfIterations = 15, RunMode = RunMode.Throughput, TestMode = TestMode.Measurement, RunTimeMilliseconds = 1000)]
+        //[CounterMeasurement("ProjectCounter")]
+        //[MemoryMeasurement(MemoryMetric.TotalBytesAllocated)]
+        //public void NBench_GetParentTask()
+        //{
+        //    var bytes = new byte[1024];
+        //    var result = controller.GetParentTask();
+        //    _objCounter.Increment();
+        //}
 
-        [PerfBenchmark(Description = "Counter iteration performance test for GETALLTASK()", NumberOfIterations = 15, RunMode = RunMode.Throughput, TestMode = TestMode.Measurement, RunTimeMilliseconds = 1000)]
-        [CounterMeasurement("ProjectCounter")]
-        [MemoryMeasurement(MemoryMetric.TotalBytesAllocated)]
-        public void NBench_GetAllTask()
-        {
-            var bytes = new byte[1024];
-            var result = controller.GetParentTask();
-            _objCounter.Increment();
-        }
+        //[PerfBenchmark(Description = "Counter iteration performance test for GETALLTASK()", NumberOfIterations = 15, RunMode = RunMode.Throughput, TestMode = TestMode.Measurement, RunTimeMilliseconds = 1000)]
+        //[CounterMeasurement("ProjectCounter")]
+        //[MemoryMeasurement(MemoryMetric.TotalBytesAllocated)]
+        //public void NBench_GetAllTask()
+        //{
+        //    var bytes = new byte[1024];
+        //    var result = controller.GetParentTask();
+        //    _objCounter.Increment();
+        //}
 
         [PerfBenchmark(Description = "Counter iteration performance test INSERTTASK()", NumberOfIterations = 15, RunMode = RunMode.Throughput, TestMode = TestMode.Measurement, RunTimeMilliseconds = 1000)]
         [CounterMeasurement("ProjectCounter")]
@@ -51,7 +51,7 @@ namespace ProjectManager.NBench
             addTask.ParentId = 3;
             JavaScriptSerializer objJavascript = new JavaScriptSerializer();
             var testModels = objJavascript.Serialize(addTask);
-            var isAdded = controller.InsertTaskDetails(testModels);
+            var isAdded = taskController.AddorUpdateTask(testModels);
             _objCounter.Increment();
         }
 
@@ -70,7 +70,7 @@ namespace ProjectManager.NBench
             updateTask.ParentId = 2;
             JavaScriptSerializer objJavascript = new JavaScriptSerializer();
             var testModels = objJavascript.Serialize(updateTask);
-            var isUpdated = controller.InsertTaskDetails(testModels);
+            var isUpdated = taskController.AddorUpdateTask(testModels);
             _objCounter.Increment();
         }
 
@@ -89,7 +89,7 @@ namespace ProjectManager.NBench
             endTask.ParentId = 2;
             JavaScriptSerializer objJavascript = new JavaScriptSerializer();
             var testModels = objJavascript.Serialize(endTask);
-            var isSuccess = controller.UpdateEndTask(testModels);
+            var isSuccess = taskController.EndTask(testModels);
             _objCounter.Increment();
         }
 
