@@ -32,10 +32,10 @@
     <Property Name="Start_Date" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="End_Date" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="Priority" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="ParentTask" Relationship="Self.FK_Task_ParentTask" FromRole="Task" ToRole="ParentTask" />
     <NavigationProperty Name="Project" Relationship="Self.FK_Task_Project" FromRole="Task" ToRole="Project" />
     <NavigationProperty Name="Users" Relationship="Self.FK_User_Task" FromRole="Task" ToRole="User" />
-    <Property Name="Status" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -45,11 +45,11 @@
     <Property Name="Employee_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="First_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Last_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="Project_ID" Type="Int32" Nullable="false" />
-    <Property Name="Task_ID" Type="Int32" Nullable="false" />
+    <Property Name="Project_ID" Type="Int32" />
+    <Property Name="Task_ID" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
     <NavigationProperty Name="Project" Relationship="Self.FK_User_Project" FromRole="User" ToRole="Project" />
     <NavigationProperty Name="Task" Relationship="Self.FK_User_Task" FromRole="User" ToRole="Task" />
-    <Property Name="IsActive" Type="Boolean" />
   </EntityType>
   <Association Name="FK_Task_ParentTask">
     <End Role="ParentTask" Type="Self.ParentTask" Multiplicity="0..1" />
@@ -76,7 +76,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_User_Project">
-    <End Role="Project" Type="Self.Project" Multiplicity="1" />
+    <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
     <End Role="User" Type="Self.User" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Project">
@@ -88,7 +88,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_User_Task">
-    <End Role="Task" Type="Self.Task" Multiplicity="1" />
+    <End Role="Task" Type="Self.Task" Multiplicity="0..1" />
     <End Role="User" Type="Self.User" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Task">

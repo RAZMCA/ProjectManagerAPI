@@ -17,5 +17,7 @@ namespace ProjectManager.Data.Models.Custom
         public int CompletedTasks { get; set; }
         public bool IsActive { get; set; }
         public int ManagerId { get; set; }
+        public string StartDateString { get; set; }
+        public string EndDateString { get; set; }
     }
 }

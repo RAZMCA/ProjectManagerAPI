@@ -39,8 +39,8 @@
     <Property Name="Employee_ID" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="First_Name" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="Last_Name" Type="varchar" MaxLength="100" />
-    <Property Name="Project_ID" Type="int" Nullable="false" />
-    <Property Name="Task_ID" Type="int" Nullable="false" />
+    <Property Name="Project_ID" Type="int" />
+    <Property Name="Task_ID" Type="int" />
     <Property Name="IsActive" Type="bit" />
   </EntityType>
   <Association Name="FK_Task_ParentTask">
@@ -68,7 +68,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_User_Project">
-    <End Role="Project" Type="Self.Project" Multiplicity="1" />
+    <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
     <End Role="User" Type="Self.User" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Project">
@@ -80,7 +80,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_User_Task">
-    <End Role="Task" Type="Self.Task" Multiplicity="1" />
+    <End Role="Task" Type="Self.Task" Multiplicity="0..1" />
     <End Role="User" Type="Self.User" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Task">

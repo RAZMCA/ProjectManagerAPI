@@ -1,4 +1,3 @@
-C:\Users\SBA\ProjectManagerAPI\TaskManager.Tests\obj\Debug\ProjectManager.Tests.csprojResolveAssemblyReference.cache
 C:\Users\SBA\ProjectManagerAPI\TaskManager.Tests\bin\Debug\ApplicationInsights.config
 C:\Users\SBA\ProjectManagerAPI\TaskManager.Tests\bin\Debug\roslyn\csc.exe
 C:\Users\SBA\ProjectManagerAPI\TaskManager.Tests\bin\Debug\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
@@ -71,5 +70,6 @@ C:\Users\SBA\ProjectManagerAPI\TaskManager.Tests\bin\Debug\ProjectManager.Busine
 C:\Users\SBA\ProjectManagerAPI\TaskManager.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.xml
 C:\Users\SBA\ProjectManagerAPI\TaskManager.Tests\bin\Debug\System.Web.Http.Owin.xml
 C:\Users\SBA\ProjectManagerAPI\TaskManager.Tests\bin\Debug\System.Web.Http.Cors.xml
+C:\Users\SBA\ProjectManagerAPI\TaskManager.Tests\obj\Debug\ProjectManager.Tests.csprojResolveAssemblyReference.cache
 C:\Users\SBA\ProjectManagerAPI\TaskManager.Tests\obj\Debug\ProjectManager.Tests.dll
 C:\Users\SBA\ProjectManagerAPI\TaskManager.Tests\obj\Debug\ProjectManager.Tests.pdb

@@ -6,6 +6,7 @@ namespace ProjectManager.Data.Models.Custom
     {
         public int TaskId { get; set; }
         public Nullable<int> ParentId { get; set; }
+        public int ProjectId { get; set; }
         public string ParentTask { get; set; }
         public string Task { get; set; }
         public string StartDateString { get; set; }

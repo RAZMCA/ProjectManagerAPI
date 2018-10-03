@@ -49,7 +49,7 @@ namespace ProjectManager.Data.Repository
                     addUser.Last_Name = userModel.LastName;
                     addUser.Employee_ID = userModel.EmployeeId;
                     addUser.IsActive = true;
-                    result = addUser.Task_ID == 0 ? "ADD" : "UPDATE";
+                    result = addUser.User_ID == 0 ? "ADD" : "UPDATE";
                     entity.Entry(addUser).State = addUser.User_ID == 0 ? System.Data.Entity.EntityState.Added : System.Data.Entity.EntityState.Modified;
                     entity.SaveChanges();
                 }

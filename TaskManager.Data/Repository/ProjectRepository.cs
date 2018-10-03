@@ -18,7 +18,9 @@ namespace ProjectManager.Data.Repository
             using (ProjectManagerEntities entity = new ProjectManagerEntities())
             {
                 var projectList = (from project in entity.Projects
-                                   join task in entity.Tasks on project.Project_ID equals task.Project_ID
+                                   join task in entity.Tasks on project.Project_ID equals task.Project_ID into allPro
+                                   from temp in allPro.DefaultIfEmpty()
+                                   where project.Status == true
                                    select new ProjectModel()
                                    {
                                        Project = project.Project1,
@@ -28,7 +30,7 @@ namespace ProjectManager.Data.Repository
                                        IsActive = project.Status,
                                        NoOfTasks = project.Tasks.Count(),
                                        CompletedTasks = project.Tasks.Where(x => x.Status == true).Count()
-                                   }).ToList();
+                                   }).Distinct().ToList();
 
                 return projectList;
             }
@@ -50,8 +52,10 @@ namespace ProjectManager.Data.Repository
                 {
                     Project addProject = new Project();
                     addProject.Project1 = projectModel.Project;
-                    addProject.Start_Date = projectModel.StartDate;
-                    addProject.End_Date = projectModel.EndDate;
+                    if (projectModel.StartDateString != null)
+                        addProject.Start_Date = Convert.ToDateTime(projectModel.StartDateString);
+                    if (projectModel.EndDateString != null)
+                        addProject.End_Date = Convert.ToDateTime(projectModel.EndDateString);
                     addProject.Priority = projectModel.Priority;
                     addProject.Status = true;
                     result = addProject.Project_ID == 0 ? "ADD" : "UPDATE";
@@ -78,8 +82,10 @@ namespace ProjectManager.Data.Repository
                     Project suspendProject = new Project();
                     suspendProject.Project1 = projectModel.Project;
                     suspendProject.Project_ID = projectModel.ProjectId;
-                    suspendProject.Start_Date = projectModel.StartDate;
-                    suspendProject.End_Date = projectModel.EndDate;
+                    if (projectModel.StartDateString != null)
+                        suspendProject.Start_Date = Convert.ToDateTime(projectModel.StartDateString);
+                    if (projectModel.EndDateString != null)
+                        suspendProject.End_Date = Convert.ToDateTime(projectModel.EndDateString);
                     suspendProject.Priority = projectModel.Priority;
                     suspendProject.Status = false;
                     entity.Entry(suspendProject).State = System.Data.Entity.EntityState.Modified;

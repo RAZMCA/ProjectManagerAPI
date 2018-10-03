@@ -90,6 +90,7 @@ namespace ProjectManager.Data.Repository
                     addTask.Priority = taskModel.Priority;
                     addTask.Parent_ID = taskModel.ParentId;
                     addTask.Task_ID = taskModel.TaskId;
+                    addTask.Project_ID = taskModel.ProjectId;
                     addTask.Status = true;
                     result = addTask.Task_ID == 0 ? "ADD" : "UPDATE";
                     entity.Entry(addTask).State = addTask.Task_ID == 0 ? System.Data.Entity.EntityState.Added : System.Data.Entity.EntityState.Modified;
@@ -121,6 +122,7 @@ namespace ProjectManager.Data.Repository
                         endTask.End_Date = Convert.ToDateTime(taskModel.EndDateString);
                     endTask.Priority = taskModel.Priority;
                     endTask.Parent_ID = taskModel.ParentId;
+                    endTask.Project_ID = taskModel.ProjectId;
                     endTask.Status = false;
                     entity.Entry(endTask).State = System.Data.Entity.EntityState.Modified;
                     entity.SaveChanges();

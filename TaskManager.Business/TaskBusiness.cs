@@ -86,6 +86,8 @@ namespace ProjectManager.Business
                     taskModel.Task = value.ToString();
                 if (dic1.TryGetValue("ParentId", out value))
                     taskModel.ParentId = string.IsNullOrWhiteSpace(value.ToString()) ? 0 : Convert.ToInt16(value);
+                if (dic1.TryGetValue("ProjectId", out value))
+                    taskModel.ProjectId = string.IsNullOrWhiteSpace(value.ToString()) ? 0 : Convert.ToInt16(value);
                 if (dic1.TryGetValue("Priority", out value))
                     taskModel.Priority = string.IsNullOrWhiteSpace(value.ToString()) ? 0 : Convert.ToInt16(value);
                 if (dic1.TryGetValue("StartDate", out value))

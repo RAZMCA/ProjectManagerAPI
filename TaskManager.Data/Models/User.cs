@@ -18,8 +18,8 @@ namespace ProjectManager.Data.Models
         public string Employee_ID { get; set; }
         public string First_Name { get; set; }
         public string Last_Name { get; set; }
-        public int Project_ID { get; set; }
-        public int Task_ID { get; set; }
+        public Nullable<int> Project_ID { get; set; }
+        public Nullable<int> Task_ID { get; set; }
         public Nullable<bool> IsActive { get; set; }
     
         public virtual Project Project { get; set; }

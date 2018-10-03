@@ -71,14 +71,16 @@ namespace ProjectManager.Business
 
                 if (dic1.TryGetValue("Project", out value))
                     projectModel.Project = value.ToString();
-                if (dic1.TryGetValue("Priority", out value))
-                    projectModel.Priority = string.IsNullOrWhiteSpace(value.ToString()) ? 0 : Convert.ToInt16(value);
+                if (dic1.TryGetValue("ProjectId", out value))
+                    projectModel.ProjectId = string.IsNullOrWhiteSpace(value.ToString()) ? 0 : Convert.ToInt16(value);
                 if (dic1.TryGetValue("StartDate", out value))
-                    projectModel.StartDate = string.IsNullOrWhiteSpace(value.ToString()) ? DateTime.Now : Convert.ToDateTime(value);
+                    projectModel.StartDateString = value.ToString();
                 if (dic1.TryGetValue("EndDate", out value))
-                    projectModel.EndDate = string.IsNullOrWhiteSpace(value.ToString()) ? DateTime.Now : Convert.ToDateTime(value);
+                    projectModel.EndDateString = value.ToString();
                 if (dic1.TryGetValue("Manager", out value))
                     projectModel.ManagerId = string.IsNullOrWhiteSpace(value.ToString()) ? 0 : Convert.ToInt16(value);
+                if (dic1.TryGetValue("Priority", out value))
+                    projectModel.Priority = string.IsNullOrWhiteSpace(value.ToString()) ? 0 : Convert.ToInt16(value);
                 return projectModel;
             }
 

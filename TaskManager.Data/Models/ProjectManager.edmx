@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ProjectManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ProjectManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ParentTask">
           <Key>
             <PropertyRef Name="Parent_ID" />
@@ -44,8 +44,8 @@
           <Property Name="Employee_ID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="First_Name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Last_Name" Type="varchar" MaxLength="100" />
-          <Property Name="Project_ID" Type="int" Nullable="false" />
-          <Property Name="Task_ID" Type="int" Nullable="false" />
+          <Property Name="Project_ID" Type="int" />
+          <Property Name="Task_ID" Type="int" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
         <Association Name="FK_Task_ParentTask">
@@ -73,7 +73,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_User_Project">
-          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Project">
@@ -85,7 +85,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_User_Task">
-          <End Role="Task" Type="Self.Task" Multiplicity="1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Task">
@@ -118,7 +118,8 @@
             <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectManagerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -154,10 +155,10 @@
           <Property Name="Start_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="End_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Priority" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ParentTask" Relationship="Self.FK_Task_ParentTask" FromRole="Task" ToRole="ParentTask" />
           <NavigationProperty Name="Project" Relationship="Self.FK_Task_Project" FromRole="Task" ToRole="Project" />
           <NavigationProperty Name="Users" Relationship="Self.FK_User_Task" FromRole="Task" ToRole="User" />
-          <Property Name="Status" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -167,11 +168,11 @@
           <Property Name="Employee_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="First_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Last_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Project_ID" Type="Int32" Nullable="false" />
-          <Property Name="Task_ID" Type="Int32" Nullable="false" />
+          <Property Name="Project_ID" Type="Int32" />
+          <Property Name="Task_ID" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
           <NavigationProperty Name="Project" Relationship="Self.FK_User_Project" FromRole="User" ToRole="Project" />
           <NavigationProperty Name="Task" Relationship="Self.FK_User_Task" FromRole="User" ToRole="Task" />
-          <Property Name="IsActive" Type="Boolean" />
         </EntityType>
         <Association Name="FK_Task_ParentTask">
           <End Role="ParentTask" Type="Self.ParentTask" Multiplicity="0..1" />
@@ -198,7 +199,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_User_Project">
-          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Project">
@@ -210,7 +211,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_User_Task">
-          <End Role="Task" Type="Self.Task" Multiplicity="1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Task">
@@ -272,7 +273,6 @@
           <EntitySetMapping Name="Tasks">
             <EntityTypeMapping TypeName="ProjectManagerModel.Task">
               <MappingFragment StoreEntitySet="Task">
-                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Task_ID" ColumnName="Task_ID" />
                 <ScalarProperty Name="Parent_ID" ColumnName="Parent_ID" />
                 <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
@@ -280,19 +280,20 @@
                 <ScalarProperty Name="Start_Date" ColumnName="Start_Date" />
                 <ScalarProperty Name="End_Date" ColumnName="End_Date" />
                 <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="ProjectManagerModel.User">
               <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
                 <ScalarProperty Name="Employee_ID" ColumnName="Employee_ID" />
                 <ScalarProperty Name="First_Name" ColumnName="First_Name" />
                 <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
                 <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
                 <ScalarProperty Name="Task_ID" ColumnName="Task_ID" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
