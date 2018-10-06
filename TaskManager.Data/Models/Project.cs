@@ -27,6 +27,7 @@ namespace ProjectManager.Data.Models
         public Nullable<System.DateTime> End_Date { get; set; }
         public Nullable<int> Priority { get; set; }
         public bool Status { get; set; }
+        public string Manager_ID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Task> Tasks { get; set; }

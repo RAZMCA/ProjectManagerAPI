@@ -8,7 +8,6 @@ namespace ProjectManager.NBench
 {
     public class NBenchTest
     {
-        TaskController taskController = new TaskController();
         private Counter _objCounter;
 
         [PerfSetup]
@@ -17,34 +16,40 @@ namespace ProjectManager.NBench
             _objCounter = context.GetCounter("ProjectCounter");
         }
 
-        //[PerfBenchmark(Description = "Counter iteration performance test GETPARENTTASK()", NumberOfIterations = 15, RunMode = RunMode.Throughput, TestMode = TestMode.Measurement, RunTimeMilliseconds = 1000)]
-        //[CounterMeasurement("ProjectCounter")]
-        //[MemoryMeasurement(MemoryMetric.TotalBytesAllocated)]
-        //public void NBench_GetParentTask()
-        //{
-        //    var bytes = new byte[1024];
-        //    var result = controller.GetParentTask();
-        //    _objCounter.Increment();
-        //}
+        #region TASK
+        TaskController taskController;
 
-        //[PerfBenchmark(Description = "Counter iteration performance test for GETALLTASK()", NumberOfIterations = 15, RunMode = RunMode.Throughput, TestMode = TestMode.Measurement, RunTimeMilliseconds = 1000)]
-        //[CounterMeasurement("ProjectCounter")]
-        //[MemoryMeasurement(MemoryMetric.TotalBytesAllocated)]
-        //public void NBench_GetAllTask()
-        //{
-        //    var bytes = new byte[1024];
-        //    var result = controller.GetParentTask();
-        //    _objCounter.Increment();
-        //}
-
-        [PerfBenchmark(Description = "Counter iteration performance test INSERTTASK()", NumberOfIterations = 15, RunMode = RunMode.Throughput, TestMode = TestMode.Measurement, RunTimeMilliseconds = 1000)]
+        [PerfBenchmark(Description = "Counter iteration performance test GETPARENTTASK()", NumberOfIterations = 3, RunMode = RunMode.Throughput, TestMode = TestMode.Measurement, RunTimeMilliseconds = 1000)]
         [CounterMeasurement("ProjectCounter")]
         [MemoryMeasurement(MemoryMetric.TotalBytesAllocated)]
-        public void NBench_InsertTask()
+        public void NBench_GetParentTask()
         {
             var bytes = new byte[1024];
+            taskController = new TaskController();
+            var result = taskController.GetParentTask();
+            _objCounter.Increment();
+        }
+
+        [PerfBenchmark(Description = "Counter iteration performance test for GETALLTASK()", NumberOfIterations = 3, RunMode = RunMode.Throughput, TestMode = TestMode.Measurement, RunTimeMilliseconds = 1000)]
+        [CounterMeasurement("ProjectCounter")]
+        [MemoryMeasurement(MemoryMetric.TotalBytesAllocated)]
+        public void NBench_GetAllTask()
+        {
+            var bytes = new byte[1024];
+            taskController = new TaskController();
+            var result = taskController.GetAllTask();
+            _objCounter.Increment();
+        }
+
+        [PerfBenchmark(Description = "Counter iteration performance test ADDTASK()", NumberOfIterations = 3, RunMode = RunMode.Throughput, TestMode = TestMode.Measurement, RunTimeMilliseconds = 1000)]
+        [CounterMeasurement("ProjectCounter")]
+        [MemoryMeasurement(MemoryMetric.TotalBytesAllocated)]
+        public void NBench_AddTask()
+        {
+            var bytes = new byte[1024];
+            taskController = new TaskController();
             TaskModel addTask = new TaskModel();
-            addTask.Task = "Task NBench";
+            addTask.Task = "Task from NBench Addtask()";
             addTask.StartDate = DateTime.Now;
             addTask.EndDate = DateTime.Now;
             addTask.Priority = 15;
@@ -55,15 +60,16 @@ namespace ProjectManager.NBench
             _objCounter.Increment();
         }
 
-        [PerfBenchmark(Description = "Counter iteration performance test UPDATETASK()", NumberOfIterations = 15, RunMode = RunMode.Throughput, TestMode = TestMode.Measurement, RunTimeMilliseconds = 1000)]
+        [PerfBenchmark(Description = "Counter iteration performance test UPDATETASK()", NumberOfIterations = 3, RunMode = RunMode.Throughput, TestMode = TestMode.Measurement, RunTimeMilliseconds = 1000)]
         [CounterMeasurement("ProjectCounter")]
         [MemoryMeasurement(MemoryMetric.TotalBytesAllocated)]
         public void NBench_UpdateTask()
         {
             var bytes = new byte[1024];
+            taskController = new TaskController();
             TaskModel updateTask = new TaskModel();
             updateTask.TaskId = 2005;
-            updateTask.Task = "Task from NBench";
+            updateTask.Task = "Task from NBench UpdateTask()";
             updateTask.StartDate = DateTime.Now;
             updateTask.EndDate = DateTime.Now;
             updateTask.Priority = 30;
@@ -74,15 +80,16 @@ namespace ProjectManager.NBench
             _objCounter.Increment();
         }
 
-        [PerfBenchmark(Description = "Counter iteration performance test ENDTASK()", NumberOfIterations = 15, RunMode = RunMode.Throughput, TestMode = TestMode.Measurement, RunTimeMilliseconds = 1000)]
+        [PerfBenchmark(Description = "Counter iteration performance test ENDTASK()", NumberOfIterations = 3, RunMode = RunMode.Throughput, TestMode = TestMode.Measurement, RunTimeMilliseconds = 1000)]
         [CounterMeasurement("ProjectCounter")]
         [MemoryMeasurement(MemoryMetric.TotalBytesAllocated)]
         public void NBench_EndTask()
         {
             var bytes = new byte[1024];
+            taskController = new TaskController();
             TaskModel endTask = new TaskModel();
             endTask.TaskId = 2005;
-            endTask.Task = "Task from NBench";
+            endTask.Task = "Task from NBench EndTask()";
             endTask.StartDate = DateTime.Now;
             endTask.EndDate = DateTime.Now;
             endTask.Priority = 30;
@@ -92,6 +99,15 @@ namespace ProjectManager.NBench
             var isSuccess = taskController.EndTask(testModels);
             _objCounter.Increment();
         }
+        #endregion
+
+        #region PROJECT
+
+        #endregion
+
+        #region USER
+
+        #endregion
 
         [PerfCleanup]
         public void Clean()

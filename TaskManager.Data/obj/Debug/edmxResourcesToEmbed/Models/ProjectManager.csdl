@@ -20,6 +20,7 @@
     <Property Name="Status" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Tasks" Relationship="Self.FK_Task_Project" FromRole="Project" ToRole="Task" />
     <NavigationProperty Name="Users" Relationship="Self.FK_User_Project" FromRole="Project" ToRole="User" />
+    <Property Name="Manager_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Task">
     <Key>

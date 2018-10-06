@@ -29,7 +29,7 @@ namespace ProjectManager.Tests
         }
 
         [TestMethod]
-        public void InsertTask()
+        public void AddTask()
         {
             taskController = new TaskController();
             TaskModel addTask = new TaskModel();

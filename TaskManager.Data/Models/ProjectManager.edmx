@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ProjectManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ProjectManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ParentTask">
           <Key>
             <PropertyRef Name="Parent_ID" />
@@ -22,6 +22,7 @@
           <Property Name="End_Date" Type="datetime" />
           <Property Name="Priority" Type="int" />
           <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="Manager_ID" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Task">
           <Key>
@@ -118,8 +119,7 @@
             <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectManagerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -143,6 +143,7 @@
           <Property Name="Status" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Task_Project" FromRole="Project" ToRole="Task" />
           <NavigationProperty Name="Users" Relationship="Self.FK_User_Project" FromRole="Project" ToRole="User" />
+          <Property Name="Manager_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Task">
           <Key>
@@ -261,6 +262,7 @@
           <EntitySetMapping Name="Projects">
             <EntityTypeMapping TypeName="ProjectManagerModel.Project">
               <MappingFragment StoreEntitySet="Project">
+                <ScalarProperty Name="Manager_ID" ColumnName="Manager_ID" />
                 <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
                 <ScalarProperty Name="Project1" ColumnName="Project" />
                 <ScalarProperty Name="Start_Date" ColumnName="Start_Date" />

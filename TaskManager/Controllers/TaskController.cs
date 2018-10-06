@@ -9,7 +9,7 @@ namespace ProjectManager.Controllers
     {
         TaskBusiness taskBusiness;
 
-        [Route("Parent")]
+        [Route("api/ProjectManager/Task/Parent")]
         [HttpGet]
         public List<TaskModel> GetParentTask()
         {
@@ -18,7 +18,7 @@ namespace ProjectManager.Controllers
             return result;
         }
 
-        [Route("All")]
+        [Route("api/ProjectManager/Task/All")]
         [HttpGet]
         public List<TaskModel> GetAllTask()
         {
@@ -27,7 +27,7 @@ namespace ProjectManager.Controllers
             return result;
         }
 
-        [Route("AddUpdate")]
+        [Route("api/ProjectManager/Task/AddUpdate")]
         [HttpPost]
         public string AddorUpdateTask(object task)
         {
@@ -37,7 +37,7 @@ namespace ProjectManager.Controllers
             return result;
         }
 
-        [Route("End")]
+        [Route("api/ProjectManager/Task/End")]
         [HttpPost]
         public bool EndTask(object task)
         {

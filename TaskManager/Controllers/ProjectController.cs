@@ -9,7 +9,7 @@ namespace ProjectManager.Controllers
     {
         ProjectBusiness projectBusiness;
 
-        [Route("All")]
+        [Route("api/ProjectManager/Project/All")]
         [HttpGet]
         public List<ProjectModel> GetAllProject()
         {
@@ -18,7 +18,7 @@ namespace ProjectManager.Controllers
             return result;
         }
 
-        [Route("AddUpdate")]
+        [Route("api/ProjectManager/Project/AddUpdate")]
         [HttpPost]
         public string AddOrUpdateProject(object project)
         {
@@ -36,7 +36,7 @@ namespace ProjectManager.Controllers
         //    return projectBusiness.UpdateProject(task);
         //}
 
-        [Route("Suspend")]
+        [Route("api/ProjectManager/Project/Suspend")]
         [HttpPost]
         public bool SuspendProject(object task)
         {

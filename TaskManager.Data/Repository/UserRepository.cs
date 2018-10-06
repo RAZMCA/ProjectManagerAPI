@@ -24,6 +24,7 @@ namespace ProjectManager.Data.Repository
                                     FirstName = user.First_Name,
                                     LastName = user.Last_Name,
                                     EmployeeId = user.Employee_ID,
+                                    UserId = user.User_ID
                                 }).ToList();
 
                 return userList;

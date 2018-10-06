@@ -9,7 +9,7 @@ namespace ProjectManager.Controllers
     {
         UserBusiness userBusiness;
 
-        [Route("UserList")]
+        [Route("api/ProjectManager/User/All")]
         [HttpGet]
         public List<UserModel> GetActiveUserList()
         {
@@ -19,7 +19,7 @@ namespace ProjectManager.Controllers
         }
 
 
-        [Route("AddUpdate")]
+        [Route("api/ProjectManager/User/AddUpdate")]
         [HttpPost]
         public string AddOrUpdateUser(object user)
         {
@@ -29,7 +29,7 @@ namespace ProjectManager.Controllers
             return result;
         }
 
-        [Route("Delete")]
+        [Route("api/ProjectManager/User/Delete")]
         [HttpPost]
         public bool DeleteUser(object user)
         {

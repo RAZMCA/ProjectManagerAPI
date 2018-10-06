@@ -23,13 +23,15 @@ namespace ProjectManager.Data.Repository
                                    where project.Status == true
                                    select new ProjectModel()
                                    {
+                                       ProjectId = project.Project_ID,
                                        Project = project.Project1,
                                        Priority = project.Priority,
                                        StartDate = project.Start_Date,
                                        EndDate = project.End_Date,
                                        IsActive = project.Status,
                                        NoOfTasks = project.Tasks.Count(),
-                                       CompletedTasks = project.Tasks.Where(x => x.Status == true).Count()
+                                       ManagerId = project.Manager_ID,
+                                       CompletedTasks = project.Tasks.Where(x => x.Status == false).Count()
                                    }).Distinct().ToList();
 
                 return projectList;
@@ -51,12 +53,14 @@ namespace ProjectManager.Data.Repository
                 if (projectModel != null)
                 {
                     Project addProject = new Project();
+                    addProject.Project_ID = projectModel.ProjectId;
                     addProject.Project1 = projectModel.Project;
-                    if (projectModel.StartDateString != null)
+                    if (projectModel.StartDateString != null && !string.IsNullOrEmpty(projectModel.StartDateString))
                         addProject.Start_Date = Convert.ToDateTime(projectModel.StartDateString);
-                    if (projectModel.EndDateString != null)
+                    if (projectModel.EndDateString != null && !string.IsNullOrEmpty(projectModel.EndDateString))
                         addProject.End_Date = Convert.ToDateTime(projectModel.EndDateString);
                     addProject.Priority = projectModel.Priority;
+                    addProject.Manager_ID = projectModel.ManagerId;
                     addProject.Status = true;
                     result = addProject.Project_ID == 0 ? "ADD" : "UPDATE";
                     entity.Entry(addProject).State = addProject.Project_ID == 0 ? System.Data.Entity.EntityState.Added : System.Data.Entity.EntityState.Modified;

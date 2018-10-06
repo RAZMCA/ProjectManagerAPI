@@ -42,11 +42,15 @@ namespace ProjectManager.Business
         /// </summary>
         /// <param name="taskModel"></param>
         /// <returns></returns>
-        public string AddorUpdateTask(object taskModel)
+        public string AddorUpdateTask(object inputModel)
         {
             string result = string.Empty;
             taskRepository = new TaskRepository();
-            result = taskRepository.AddorUpdateTask(TaskConverter(taskModel));
+            TaskModel taskModel = TaskConverter(inputModel);
+            if (taskModel != null && taskModel.IsParent)
+                result = taskRepository.AddParent(taskModel);
+            else
+                result = taskRepository.AddorUpdateTask(taskModel);
             return result;
         }
         #endregion
@@ -83,7 +87,7 @@ namespace ProjectManager.Business
                 object value;
 
                 if (dic1.TryGetValue("Task", out value))
-                    taskModel.Task = value.ToString();
+                    taskModel.Task = value != null ? value.ToString() : null;
                 if (dic1.TryGetValue("ParentId", out value))
                     taskModel.ParentId = string.IsNullOrWhiteSpace(value.ToString()) ? 0 : Convert.ToInt16(value);
                 if (dic1.TryGetValue("ProjectId", out value))
@@ -91,11 +95,20 @@ namespace ProjectManager.Business
                 if (dic1.TryGetValue("Priority", out value))
                     taskModel.Priority = string.IsNullOrWhiteSpace(value.ToString()) ? 0 : Convert.ToInt16(value);
                 if (dic1.TryGetValue("StartDate", out value))
-                    taskModel.StartDateString = value.ToString();
+                    taskModel.StartDateString = value != null ? value.ToString() : null;
                 if (dic1.TryGetValue("EndDate", out value))
-                    taskModel.EndDateString = value.ToString();
+                    taskModel.EndDateString = value != null ? value.ToString() : null;
                 if (dic1.TryGetValue("TaskId", out value))
                     taskModel.TaskId = string.IsNullOrWhiteSpace(value.ToString()) ? 0 : Convert.ToInt16(value);
+                if (dic1.TryGetValue("IsParent", out value))
+                    taskModel.IsParent = Convert.ToBoolean(value);
+                if (dic1.TryGetValue("ParentTask", out value))
+                    taskModel.ParentTask = value != null ? value.ToString() : null;
+                if (dic1.TryGetValue("ManagerId", out value))
+                    taskModel.ManagerId = value != null ? value.ToString() : null;
+                if (dic1.TryGetValue("UserId", out value))
+                    taskModel.UserId = string.IsNullOrWhiteSpace(value.ToString()) ? 0 : Convert.ToInt16(value);
+
                 return taskModel;
             }
 
