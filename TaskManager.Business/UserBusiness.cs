@@ -70,13 +70,17 @@ namespace ProjectManager.Business
                 object value;
 
                 if (dic1.TryGetValue("FirstName", out value))
-                    userModel.FirstName = value.ToString();
+                    userModel.FirstName = value != null ? value.ToString() : null;
                 if (dic1.TryGetValue("LastName", out value))
-                    userModel.LastName = value.ToString();
+                    userModel.LastName = value != null ? value.ToString() : null;
                 if (dic1.TryGetValue("EmployeeId", out value))
-                    userModel.EmployeeId = value.ToString();
+                    userModel.EmployeeId = value != null ? value.ToString() : null;
                 if (dic1.TryGetValue("UserId", out value))
                     userModel.UserId = string.IsNullOrWhiteSpace(value.ToString()) ? 0 : Convert.ToInt16(value);
+                if (dic1.TryGetValue("ProejctId", out value))
+                    userModel.ProjectId = string.IsNullOrWhiteSpace(value.ToString()) ? 0 : Convert.ToInt16(value);
+                if (dic1.TryGetValue("TaskId", out value))
+                    userModel.TaskId = string.IsNullOrWhiteSpace(value.ToString()) ? 0 : Convert.ToInt16(value);
                 return userModel;
             }
 

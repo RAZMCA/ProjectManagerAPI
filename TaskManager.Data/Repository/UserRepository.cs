@@ -19,6 +19,7 @@ namespace ProjectManager.Data.Repository
             {
                 var userList = (from user in entity.Users
                                 where user.IsActive == true
+                                orderby user.User_ID descending
                                 select new UserModel()
                                 {
                                     FirstName = user.First_Name,
@@ -50,6 +51,7 @@ namespace ProjectManager.Data.Repository
                     addUser.Last_Name = userModel.LastName;
                     addUser.Employee_ID = userModel.EmployeeId;
                     addUser.IsActive = true;
+                    addUser.User_ID = userModel.UserId;
                     result = addUser.User_ID == 0 ? "ADD" : "UPDATE";
                     entity.Entry(addUser).State = addUser.User_ID == 0 ? System.Data.Entity.EntityState.Added : System.Data.Entity.EntityState.Modified;
                     entity.SaveChanges();

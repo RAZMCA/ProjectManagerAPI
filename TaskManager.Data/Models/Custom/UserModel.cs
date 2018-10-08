@@ -13,5 +13,7 @@ namespace ProjectManager.Data.Models.Custom
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool IsActive { get; set; }
+        public int ProjectId { get; set; }
+        public int TaskId { get; set; }
     }
 }

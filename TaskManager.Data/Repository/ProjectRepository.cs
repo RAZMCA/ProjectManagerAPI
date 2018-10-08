@@ -21,6 +21,7 @@ namespace ProjectManager.Data.Repository
                                    join task in entity.Tasks on project.Project_ID equals task.Project_ID into allPro
                                    from temp in allPro.DefaultIfEmpty()
                                    where project.Status == true
+                                   //orderby project.Project_ID descending
                                    select new ProjectModel()
                                    {
                                        ProjectId = project.Project_ID,
@@ -34,7 +35,7 @@ namespace ProjectManager.Data.Repository
                                        CompletedTasks = project.Tasks.Where(x => x.Status == false).Count()
                                    }).Distinct().ToList();
 
-                return projectList;
+                return projectList.OrderByDescending(x => x.ProjectId).ToList();
             }
         }
         #endregion 
